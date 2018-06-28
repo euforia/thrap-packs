@@ -1,0 +1,4 @@
+FROM python:${lang.version} as build
+
+FROM python:${lang.version}-alpine
+
