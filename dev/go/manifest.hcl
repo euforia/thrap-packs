@@ -9,5 +9,6 @@ ScaffoldFiles  = [
     "Makefile",
     "dockerfile",
     "README.md",
-    "Gopkg.toml"
+    "Gopkg.toml",
+    "Gopkg.lock"
 ]
