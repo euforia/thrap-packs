@@ -1,12 +1,21 @@
 FROM golang:${lang.version} as build
+# Set the working directory for the build
 WORKDIR /go/src/${vcs.addr}/${vcs.repo.owner}/${vcs.repo.name}
+# The order of the commands below is set for optimized cached builds.  
+# DO NOT EDIT UNLESS YOU KNOW WHAT YOU ARE DOING
 RUN go get github.com/golang/dep/cmd/dep
 COPY Gopkg.* ./
 RUN dep ensure -v -vendor-only
+# END DO NOT EDIT UNLESS YOU KNOW WHAT YOU ARE DOING
+
+# All additions should be made after this line to leverage build caching
+
+# Copy source code from context into build container
 COPY . .
 RUN make test
 RUN make dist
 
+# Stage to build final artifact image
 FROM alpine
 WORKDIR /
 COPY --from=build /go/src/${vcs.addr}/${vcs.repo.owner}/${vcs.repo.name}/dist/${stack.id}-linux /usr/bin/${stack.id}
