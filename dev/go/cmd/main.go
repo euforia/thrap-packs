@@ -1,8 +1,11 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
+	"log"
+	"net/http"
 	"os"
 	"time"
 )
@@ -20,6 +23,7 @@ func Version() string {
 
 var (
 	showVersion = flag.Bool("version", false, "show version")
+	bindAddr    = flag.String("bind-addr", ":8080", "Bind address")
 )
 
 func init() {
@@ -41,6 +45,20 @@ func main() {
 	}
 
 	//
-	// TODO: Add code here
+	// TODO: Code below is a sample.  Add code here.
 	//
+
+	http.HandleFunc("/v1/status", func(w http.ResponseWriter, r *http.Request) {
+		b, _ := json.Marshal(map[string]string{
+			"version":   _version,
+			"buildtime": _buildtime,
+		})
+		w.Write(b)
+	})
+
+	err := http.ListenAndServe(*bindAddr, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 }
