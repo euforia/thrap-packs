@@ -16,6 +16,10 @@ clean:
 	rm -rf dist
 	rm -f $(NAME)
 
+deps:
+	go get github.com/golang/dep/cmd/dep
+	dep ensure -v
+
 test:
 	go test -cover $(SOURCE_PACKAGES)
 

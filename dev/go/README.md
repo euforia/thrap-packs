@@ -8,6 +8,8 @@ ${stack.description}
 $ make deps
 ```
 
+The above command should be run each time dependencies need to be updated.
+
 #### Run tests
 ```shell
 $ make test
@@ -26,7 +28,7 @@ will be available in this folder
 $ make dist
 ```
 
-Binaries will be available in the `dist` folder.
+Binaries will be available under the `dist` folder.
 
 #### Docker
 A fully containerized build can be run as follows:
